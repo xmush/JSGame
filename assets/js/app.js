@@ -1,9 +1,14 @@
-// let mainDiv = document.getElementById("main")
-const mainDiv = document.getElementById("main")
-const listColor = ['#c2b9dd', '#ccc7d4', '#faf6ff', '#c4dad7', '#f5d9d1', '#f3bced', '#a38da4', '#c6e1c1', '#ded8dd', '#b9b1a4', '#ad888c', '#ffd7c9', '#93c2d3', '#bef2f6', '#e0e3dd', '#a3c6ce', '#b4edf3', '#e4fec5', '#f9db7c', '#ecd7d9', '#cccccc', '#d1d8de', '#d7eef9', '#fae1cc', '#f6d7cb', '#b4a598']
 Array.prototype.random = function () {
     return this[Math.floor((Math.random()*this.length))];
 }
+
+// let mainDiv = document.getElementById("main")
+const mainDiv = document.getElementById("main")
+const listColor = ['#c2b9dd', '#ccc7d4', '#faf6ff', '#c4dad7', '#f5d9d1', '#f3bced', '#a38da4', '#c6e1c1', '#ded8dd', '#b9b1a4', '#ad888c', '#ffd7c9', '#93c2d3', '#bef2f6', '#e0e3dd', '#a3c6ce', '#b4edf3', '#e4fec5', '#f9db7c', '#ecd7d9', '#cccccc', '#d1d8de', '#d7eef9', '#fae1cc', '#f6d7cb', '#b4a598']
+
+// deklarasi nilai dadu 
+let dice = 0
+
 // console.log(mainDiv)
 const listMiniBox = []
 let numberBox = 1
@@ -50,30 +55,34 @@ function addPlayer() {
     // playerLocation2 = document.getElementById('2')
 
     playerMarker = document.createElement("div")
-    player2Marker = document.createElement("div")
     playerMarker.setAttribute("class", "marker")
     playerMarker.setAttribute("id", "marker")
-    player2Marker.setAttribute("class", "marker2")
-    player2Marker.setAttribute("id", "marker2")
+    
+    // player2Marker = document.createElement("div")
+    // player2Marker.setAttribute("class", "marker2")
+    // player2Marker.setAttribute("id", "marker2")
+
     // playerMarker2 = document.createElement("div")
     // playerMarker2.setAttribute("class", "marker2")
     playerLocation.appendChild(playerMarker)
-    playerLocation.appendChild(player2Marker)
+    // playerLocation.appendChild(player2Marker)
     // playerLocation2.appendChild(playerMarker2)
     // console.log(playerLocation)
 }
-// addPlayer()
+addPlayer()
 
-function movePlayer() {
-    let palyerMovement = 1
-    let playerObj = document.getElementById("marker")
-    let playerLocationParent = playerObj.parentNode;
-    let parentId = playerLocationParent.getAttribute("id")
-    let destinationId = parseInt(parentId)+ palyerMovement
-    let playerDestination = document.getElementById(`${destinationId}`)
-    console.log(parentId)
-    console.log(destinationId)
-    playerDestination.appendChild(playerObj)
+function movePlayer(distance=0) {
+    let palyerMovement = distance
+    for(i=1; i<= palyerMovement; i++) {
+        setTimeout(function(){ 
+            let playerObj = document.getElementById("marker")
+            let playerLocationParent = playerObj.parentNode;
+            let parentId = playerLocationParent.getAttribute("id")
+            let destinationId = parseInt(parentId)+ 1
+            let playerDestination = document.getElementById(`${destinationId}`)
+            playerDestination.appendChild(playerObj)
+         }, 1000);
+    }
     
     // console.log("clicked")
 }
@@ -93,33 +102,30 @@ function movePlayerBack() {
 }
 
 const body = document.body
-let btnAddPlayer = document.createElement("button")
-let buttonContent = document.createTextNode("Add Player")
-btnAddPlayer.appendChild(buttonContent)
-btnAddPlayer.addEventListener("click", addPlayer)
-// btnAddPlayer.setAttribute("onClick", )
-body.appendChild(btnAddPlayer)
+// let btnAddPlayer = document.createElement("button")
+// let buttonContent = document.createTextNode("Add Player")
+// btnAddPlayer.appendChild(buttonContent)
+// btnAddPlayer.addEventListener("click", addPlayer)
+// body.appendChild(btnAddPlayer)
 
 
-let btnMove = document.createElement("button")
-let buttonMoveContent = document.createTextNode("Move Player")
-btnMove.appendChild(buttonMoveContent)
-btnMove.addEventListener("click", movePlayer)
-// btnAddPlayer.setAttribute("onClick", )
-body.appendChild(btnMove)
+// let btnMove = document.createElement("button")
+// let buttonMoveContent = document.createTextNode("Move Player")
+// btnMove.appendChild(buttonMoveContent)
+// btnMove.addEventListener("click", movePlayer)
+// body.appendChild(btnMove)
 
 
-let btnMoveBack = document.createElement("button")
-let buttonMoveBackContent = document.createTextNode("Back Player")
-btnMoveBack.appendChild(buttonMoveBackContent)
-btnMoveBack.addEventListener("click", movePlayerBack)
-// btnAddPlayer.setAttribute("onClick", )
-body.appendChild(btnMoveBack)
+// let btnMoveBack = document.createElement("button")
+// let buttonMoveBackContent = document.createTextNode("Back Player")
+// btnMoveBack.appendChild(buttonMoveBackContent)
+// btnMoveBack.addEventListener("click", movePlayerBack)
+// body.appendChild(btnMoveBack)
 
 
 // Aji
 //Menambah Children pada Main
-const body = document.body
+// const body = document.body
 let playerDiv = document.createElement("div")
 playerDiv.setAttribute("class", "player")
 body.appendChild(playerDiv)
@@ -139,9 +145,9 @@ for(player=1; player<2; player++){
     jenisPlayerDiv.setAttribute("class", `player${player}`)
     playerDiv.appendChild(jenisPlayerDiv)
     //Membuat logo jenis Player
-    let markerPlayer1 = document.createElement("p")
-    markerPlayer1.setAttribute("class", "marker")
-    jenisPlayerDiv.appendChild(markerPlayer1)
+    // let markerPlayer1 = document.createElement("p")
+    // markerPlayer1.setAttribute("class", "marker")
+    // jenisPlayerDiv.appendChild(markerPlayer1)
     //Membuat judul jenis Player
     let jenisPlayerInPlayerBox = document.createElement("h3")
     let jenisPlayerInPlayerBoxText = document.createTextNode(`Player ${player}`)
@@ -193,5 +199,9 @@ function printDadu(angka){
 let button = document.getElementById("dadu")
 button.onclick = function(){
     var hasil = dadu.acak();
+    dice = hasil
+    move = movePlayer(parseInt(dice))
     printDadu(hasil);
 }
+
+
