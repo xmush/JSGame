@@ -56,5 +56,78 @@ function addPlayer() {
     playerLocation2.appendChild(playerMarker2)
     // console.log(playerLocation)
 }
-
 addPlayer()
+
+
+
+// Aji
+//Menambah Children pada Main
+const body = document.body
+var playerDiv = document.createElement("div")
+playerDiv.setAttribute("class", "player")
+body.appendChild(playerDiv)
+
+//Menambah isi di kotak player
+//Menambah tulisan Player
+var playerInPlayerBox = document.createElement("h2")
+var playerInPlayerBoxText = document.createTextNode("Player")
+playerInPlayerBox.appendChild(playerInPlayerBoxText)
+playerDiv.appendChild(playerInPlayerBox)
+
+//Menambah Jenis Player dan Keterangan (Health & Position)
+for(player=1; player<2; player++){
+    //Membuat Div Wadah jenis Player
+    var jenisPlayerDiv = document.createElement("div")
+    jenisPlayerDiv.setAttribute("class", `player${player}`)
+    playerDiv.appendChild(jenisPlayerDiv)
+    //Membuat isi Wadah Div jenis Player
+    var jenisPlayerInPlayerBox = document.createElement("h4")
+    var jenisPlayerInPlayerBoxText = document.createTextNode(`Player ${player}`)
+    jenisPlayerInPlayerBox.appendChild(jenisPlayerInPlayerBoxText)
+    jenisPlayerDiv.appendChild(jenisPlayerInPlayerBox)
+    //Membuat Position
+    var positionPlayer = document.createElement("p")
+    var positionPlayerText = document.createTextNode(`Position :`)
+    positionPlayer.appendChild(positionPlayerText)
+    jenisPlayerDiv.appendChild(positionPlayer)
+    //Membuat Health
+    var healthPlayer = document.createElement("p")
+    var healthPlayerText = document.createTextNode(`Health :`)
+    healthPlayer.appendChild(healthPlayerText)
+    jenisPlayerDiv.appendChild(healthPlayer)
+}
+
+//Menambah div Dadu
+var daduDiv = document.createElement("div")
+daduDiv.setAttribute("class", "dadu")
+daduDiv.innerHTML = "<h2>Dadu</h2>"
+playerDiv.appendChild(daduDiv)
+
+//Membuat tempat dadu
+var tempatDadu = document.createElement("p")
+tempatDadu.setAttribute("id", "placeholderDadu")
+daduDiv.appendChild(tempatDadu)
+
+//Membuat Roll Dadu
+var buttonDadu = document.createElement("button")
+buttonDadu.setAttribute("id", "dadu")
+buttonDadu.innerHTML = "ROLL DICE"
+daduDiv.appendChild(buttonDadu)
+
+//Mengisi angka pada Roll Dice
+var dadu = {
+    acak: function(){
+        var resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
+        return resultRandom;
+    }
+}
+//Print angka pada layout
+function printDadu(angka){
+    var placeholderDadu = document.getElementById('placeholderDadu');
+    placeholderDadu.innerHTML = angka;
+}
+var button = document.getElementById("dadu")
+button.onclick = function(){
+    var hasil = dadu.acak();
+    printDadu(hasil);
+}

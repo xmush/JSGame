@@ -57,3 +57,36 @@
     margin-top: -5px;
     background-color: #fff;
 }
+
+/* AJI */
+.player {
+    border: 1px solid black;
+    width: 300px;
+    height: auto;
+    display: inline-grid;
+    top: 0;
+}
+.player1 {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#placeholderDadu {
+    border: 1px solid gray;
+    height: 120px;
+    width: 120px;
+    margin: 0 auto;
+    border-radius: 10px;
+    font-size: 100px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+#dadu {
+    background-color: grey;
+    cursor: pointer;
+    padding: 5px 60px;
+    border-radius: 10px;
+    color: white;
+    border: none;
+    margin-left: 50px;
+}
