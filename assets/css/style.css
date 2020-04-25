@@ -59,16 +59,36 @@
 }
 
 /* AJI */
+body{
+    background-image: url(../img/704496.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .player {
+    background-color: white;
+    opacity: 0.75;
     border: 1px solid black;
     width: 300px;
     height: auto;
     display: inline-grid;
     top: 0;
+    margin-left: 40px;
+    border-radius: 30px;
+}
+#titlePlayer{
+    margin-left: auto;
+    margin-right: auto;
 }
 .player1 {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#titlePlayer1 {
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-bottom: 30px;
 }
 #placeholderDadu {
     border: 1px solid gray;
@@ -77,16 +97,22 @@
     margin: 0 auto;
     border-radius: 10px;
     font-size: 100px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
+}
+.titleDadu {
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 #dadu {
     background-color: grey;
     cursor: pointer;
-    padding: 5px 60px;
+    padding: 5px 30px;
     border-radius: 10px;
     color: white;
     border: none;
-    margin-left: 50px;
+    margin-left: 84px;
+    margin-bottom: 10px;
 }
