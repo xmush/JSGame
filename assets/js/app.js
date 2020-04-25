@@ -16,8 +16,8 @@ for(i=0; i<10; i++) {
         // divBox.setAttribute("id", `col${i}row${j}`);
         divBox.setAttribute("id", `${numberBox}`);
         divBox.style.backgroundColor = listColor.random()
-        // boxContent = document.createTextNode(`${i}${j}`)
-        boxContent = document.createTextNode('')
+        boxContent = document.createTextNode(`${numberBox}`)
+        // boxContent = document.createTextNode('')
         divBox.appendChild(boxContent)
 
         // mainDiv.appendChild(divBox)
@@ -45,16 +45,72 @@ for(itemCol of listMiniBox.reverse()) {
 
 // return location
 function addPlayer() {
+
     playerLocation = document.getElementById('1')
-    playerLocation2 = document.getElementById('2')
+    // playerLocation2 = document.getElementById('2')
 
     playerMarker = document.createElement("div")
+    player2Marker = document.createElement("div")
     playerMarker.setAttribute("class", "marker")
-    playerMarker2 = document.createElement("div")
-    playerMarker2.setAttribute("class", "marker2")
+    playerMarker.setAttribute("id", "marker")
+    player2Marker.setAttribute("class", "marker2")
+    player2Marker.setAttribute("id", "marker2")
+    // playerMarker2 = document.createElement("div")
+    // playerMarker2.setAttribute("class", "marker2")
     playerLocation.appendChild(playerMarker)
-    playerLocation2.appendChild(playerMarker2)
+    playerLocation.appendChild(player2Marker)
+    // playerLocation2.appendChild(playerMarker2)
     // console.log(playerLocation)
 }
 
-addPlayer()
+function movePlayer() {
+    let palyerMovement = 1
+    let playerObj = document.getElementById("marker")
+    let playerLocationParent = playerObj.parentNode;
+    let parentId = playerLocationParent.getAttribute("id")
+    let destinationId = parseInt(parentId)+ palyerMovement
+    let playerDestination = document.getElementById(`${destinationId}`)
+    console.log(parentId)
+    console.log(destinationId)
+    playerDestination.appendChild(playerObj)
+    
+    // console.log("clicked")
+}
+
+function movePlayerBack() {
+    let palyerMovement = 1
+    let playerObj = document.getElementById("marker")
+    let playerLocationParent = playerObj.parentNode;
+    let parentId = playerLocationParent.getAttribute("id")
+    let destinationId = parseInt(parentId)- palyerMovement
+    let playerDestination = document.getElementById(`${destinationId}`)
+    console.log(parentId)
+    console.log(destinationId)
+    playerDestination.appendChild(playerObj)
+    
+    // console.log("clicked")
+}
+
+const body = document.body
+let btnAddPlayer = document.createElement("button")
+let buttonContent = document.createTextNode("Add Player")
+btnAddPlayer.appendChild(buttonContent)
+btnAddPlayer.addEventListener("click", addPlayer)
+// btnAddPlayer.setAttribute("onClick", )
+body.appendChild(btnAddPlayer)
+
+
+let btnMove = document.createElement("button")
+let buttonMoveContent = document.createTextNode("Move Player")
+btnMove.appendChild(buttonMoveContent)
+btnMove.addEventListener("click", movePlayer)
+// btnAddPlayer.setAttribute("onClick", )
+body.appendChild(btnMove)
+
+
+let btnMoveBack = document.createElement("button")
+let buttonMoveBackContent = document.createTextNode("Back Player")
+btnMoveBack.appendChild(buttonMoveBackContent)
+btnMoveBack.addEventListener("click", movePlayerBack)
+// btnAddPlayer.setAttribute("onClick", )
+body.appendChild(btnMoveBack)
