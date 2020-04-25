@@ -62,6 +62,7 @@ function addPlayer() {
     // playerLocation2.appendChild(playerMarker2)
     // console.log(playerLocation)
 }
+// addPlayer()
 
 function movePlayer() {
     let palyerMovement = 1
@@ -114,3 +115,83 @@ btnMoveBack.appendChild(buttonMoveBackContent)
 btnMoveBack.addEventListener("click", movePlayerBack)
 // btnAddPlayer.setAttribute("onClick", )
 body.appendChild(btnMoveBack)
+
+
+// Aji
+//Menambah Children pada Main
+const body = document.body
+let playerDiv = document.createElement("div")
+playerDiv.setAttribute("class", "player")
+body.appendChild(playerDiv)
+
+//Menambah isi di kotak player
+//Menambah tulisan Player
+let playerInPlayerBox = document.createElement("h2")
+playerInPlayerBox.setAttribute("id", "titlePlayer")
+let playerInPlayerBoxText = document.createTextNode("PLAYER")
+playerInPlayerBox.appendChild(playerInPlayerBoxText)
+playerDiv.appendChild(playerInPlayerBox)
+
+//Menambah Jenis Player dan Keterangan (Health & Position)
+for(player=1; player<2; player++){
+    //Membuat Div Wadah jenis Player
+    let jenisPlayerDiv = document.createElement("div")
+    jenisPlayerDiv.setAttribute("class", `player${player}`)
+    playerDiv.appendChild(jenisPlayerDiv)
+    //Membuat logo jenis Player
+    let markerPlayer1 = document.createElement("p")
+    markerPlayer1.setAttribute("class", "marker")
+    jenisPlayerDiv.appendChild(markerPlayer1)
+    //Membuat judul jenis Player
+    let jenisPlayerInPlayerBox = document.createElement("h3")
+    let jenisPlayerInPlayerBoxText = document.createTextNode(`Player ${player}`)
+    jenisPlayerInPlayerBox.appendChild(jenisPlayerInPlayerBoxText)
+    jenisPlayerInPlayerBox.setAttribute("id", "titlePlayer1")
+    jenisPlayerDiv.appendChild(jenisPlayerInPlayerBox)
+    //Membuat Position
+    let positionPlayer = document.createElement("p")
+    let positionPlayerText = document.createTextNode(`Position :`)
+    positionPlayer.appendChild(positionPlayerText)
+    jenisPlayerDiv.appendChild(positionPlayer)
+    //Membuat Health
+    let healthPlayer = document.createElement("p")
+    let healthPlayerText = document.createTextNode(`Health :`)
+    healthPlayer.appendChild(healthPlayerText)
+    jenisPlayerDiv.appendChild(healthPlayer)
+}
+
+//Menambah div Dadu
+let daduDiv = document.createElement("div")
+daduDiv.setAttribute("class", "dadu")
+playerInPlayerBox.setAttribute("id", "titlePlayer")
+daduDiv.innerHTML = "<h3 class='titleDadu'>Dadu</h3>"
+playerDiv.appendChild(daduDiv)
+
+//Membuat tempat dadu
+let tempatDadu = document.createElement("p")
+tempatDadu.setAttribute("id", "placeholderDadu")
+daduDiv.appendChild(tempatDadu)
+
+//Membuat Roll Dadu
+let buttonDadu = document.createElement("button")
+buttonDadu.setAttribute("id", "dadu")
+buttonDadu.innerHTML = "ROLL DICE"
+daduDiv.appendChild(buttonDadu)
+
+//Mengisi angka pada Roll Dice
+let dadu = {
+    acak: function(){
+        var resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
+        return resultRandom;
+    }
+}
+//Print angka pada layout
+function printDadu(angka){
+    let placeholderDadu = document.getElementById('placeholderDadu');
+    placeholderDadu.innerHTML = angka;
+}
+let button = document.getElementById("dadu")
+button.onclick = function(){
+    var hasil = dadu.acak();
+    printDadu(hasil);
+}
