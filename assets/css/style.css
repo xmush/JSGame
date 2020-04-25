@@ -1,11 +1,19 @@
 body {
-    display: inline block;
+    width: 100%;
+    /* display: inline block; */
+    margin: 0;
+    padding: 30px;
+    overflow: hidden;
+    display: inline-grid;
+    grid-template-columns: 60% 40%;
 }
 #main {
     border: 1px solid #d3d3d3;
-    /* background-color: #f1f1f1; */
+    background-color: #f1f1f1;
     width: 650px;
     height: 650px;
+    margin: auto auto;
+    top : 0;
     display: inline-grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
 }
@@ -86,6 +94,7 @@ body{
 #titlePlayer{
     margin-left: auto;
     margin-right: auto;
+    height: auto;
 }
 .player1 {
     border-top: 1px solid black;
