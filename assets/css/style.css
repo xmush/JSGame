@@ -6,6 +6,9 @@ body {
     overflow: hidden;
     display: inline-grid;
     grid-template-columns: 60% 40%;
+    background-image: url(../img/704496.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #main {
     border: 1px solid #d3d3d3;
@@ -23,6 +26,7 @@ body {
     height: 63px;
     border: 0.049em solid rgb(214, 214, 214);
     position: relative;
+    
 }
 .marker {
     background-color: #fff;
@@ -34,6 +38,8 @@ body {
     width: 20px;
     height: 20px;
     transform: rotate(-45deg);
+    animation-name: markerAnimation;
+    animation-duration: 1s;
 }
 
 .marker::after{
@@ -74,12 +80,20 @@ body {
     background-color: rgb(255, 132, 18);
 }
 
+@keyframes markerAnimation {
+    from { top : 0%; left : 20% }
+    to {top : 20%; left: 20%;}
+
+}
+
+
 /* AJI */
-body{
+/* body{
     background-image: url(../img/704496.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
+
 .player {
     background-color: white;
     opacity: 0.75;
