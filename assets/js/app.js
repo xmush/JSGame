@@ -5,7 +5,10 @@ Array.prototype.random = function () {
 // let mainDiv = document.getElementById("main")
 const mainDiv = document.getElementById("main")
 const listColor = ['#c2b9dd', '#ccc7d4', '#faf6ff', '#c4dad7', '#f5d9d1', '#f3bced', '#a38da4', '#c6e1c1', '#ded8dd', '#b9b1a4', '#ad888c', '#ffd7c9', '#93c2d3', '#bef2f6', '#e0e3dd', '#a3c6ce', '#b4edf3', '#e4fec5', '#f9db7c', '#ecd7d9', '#cccccc', '#d1d8de', '#d7eef9', '#fae1cc', '#f6d7cb', '#b4a598']
-
+const listTypeBox = ['bomb', 'save', 'bonus', 'bomb'];
+const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5']
+let playerHealth = 200
+let playerPosition = 0
 // deklarasi nilai dadu 
 let dice = 0
 
@@ -16,10 +19,19 @@ let numberBox = 1
 for(i=0; i<10; i++) {
     let tempList = []
     for(j=0; j<10; j++) {
+        let typeBox = listTypeBox.random()
+        let bonusBox = listBonusBox.random()
         divBox = document.createElement("div");
         divBox.setAttribute("class", "miniBox");
         // divBox.setAttribute("id", `col${i}row${j}`);
         divBox.setAttribute("id", `${numberBox}`);
+        if (numberBox == 1) {
+            divBox.setAttribute("data-type_box", "start");
+            divBox.setAttribute("data-bonus_box", "start");
+        } else {
+            divBox.setAttribute("data-type_box", `${typeBox}`);
+            divBox.setAttribute("data-bonus_box", `${bonusBox}`);
+        }
         divBox.style.backgroundColor = listColor.random()
         boxContent = document.createTextNode(`${numberBox}`)
         // boxContent = document.createTextNode('')
@@ -71,6 +83,23 @@ function addPlayer() {
 }
 addPlayer()
 
+const movePlayer2G = async (distance=0) => {
+    let palyerMovement = distance
+    let startPoint = document.getElementById("marker").parentNode.getAttribute("id")
+    for(i=1; i<= palyerMovement; i++) {
+        setTimeout(function(){ 
+            let playerObj = document.getElementById("marker")
+            let playerLocationParent = playerObj.parentNode;
+            let parentId = playerLocationParent.getAttribute("id")
+            let destinationId = parseInt(parentId)+ 1
+            let playerDestination = document.getElementById(`${destinationId}`)
+            playerDestination.appendChild(playerObj)
+        }, i*800)
+    }
+    return parseInt(startPoint) + distance
+}
+
+
 function movePlayer(distance=0) {
     let palyerMovement = distance
     for(i=1; i<= palyerMovement; i++) {
@@ -81,8 +110,10 @@ function movePlayer(distance=0) {
             let destinationId = parseInt(parentId)+ 1
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
-         }, 1000);
+         }, i*800);
     }
+
+    // checkBoxType()
     
     // console.log("clicked")
 }
@@ -101,27 +132,18 @@ function movePlayerBack() {
     // console.log("clicked")
 }
 
+const checkBoxType = async () => new Promise((resolve) => {
+    let playerObj = document.getElementById("marker")
+    let playerLocationParent = playerObj.parentNode;
+    let parentType = playerLocationParent.getAttribute('data-type_box')
+    resolve(console.log(parentType))
+})
+
+const cBox = async (idParent) => {
+    console.log(idParent)
+}
+
 const body = document.body
-// let btnAddPlayer = document.createElement("button")
-// let buttonContent = document.createTextNode("Add Player")
-// btnAddPlayer.appendChild(buttonContent)
-// btnAddPlayer.addEventListener("click", addPlayer)
-// body.appendChild(btnAddPlayer)
-
-
-// let btnMove = document.createElement("button")
-// let buttonMoveContent = document.createTextNode("Move Player")
-// btnMove.appendChild(buttonMoveContent)
-// btnMove.addEventListener("click", movePlayer)
-// body.appendChild(btnMove)
-
-
-// let btnMoveBack = document.createElement("button")
-// let buttonMoveBackContent = document.createTextNode("Back Player")
-// btnMoveBack.appendChild(buttonMoveBackContent)
-// btnMoveBack.addEventListener("click", movePlayerBack)
-// body.appendChild(btnMoveBack)
-
 
 // Aji
 //Menambah Children pada Main
@@ -156,14 +178,21 @@ for(player=1; player<2; player++){
     jenisPlayerDiv.appendChild(jenisPlayerInPlayerBox)
     //Membuat Position
     let positionPlayer = document.createElement("p")
-    let positionPlayerText = document.createTextNode(`Position :`)
+    positionPlayer.setAttribute("id", "playerPosition")
+    let positionPlayerText = document.createTextNode(`Position : ${playerPosition}`)
     positionPlayer.appendChild(positionPlayerText)
     jenisPlayerDiv.appendChild(positionPlayer)
     //Membuat Health
     let healthPlayer = document.createElement("p")
-    let healthPlayerText = document.createTextNode(`Health :`)
+    let healthPlayerText = document.createTextNode(`Health : ${playerHealth}`)
     healthPlayer.appendChild(healthPlayerText)
     jenisPlayerDiv.appendChild(healthPlayer)
+}
+
+let changePositionBar = (playerNewPosition) => {
+    position = document.getElementById("playerPosition")
+    position.innerHTML = `Position : ${playerNewPosition}`
+    console.log(playerNewPosition)
 }
 
 //Menambah div Dadu
@@ -176,6 +205,7 @@ playerDiv.appendChild(daduDiv)
 //Membuat tempat dadu
 let tempatDadu = document.createElement("p")
 tempatDadu.setAttribute("id", "placeholderDadu")
+tempatDadu.innerHTML = 0
 daduDiv.appendChild(tempatDadu)
 
 //Membuat Roll Dadu
@@ -197,11 +227,16 @@ function printDadu(angka){
     placeholderDadu.innerHTML = angka;
 }
 let button = document.getElementById("dadu")
-button.onclick = function(){
+button.onclick = async () => {
     var hasil = dadu.acak();
     dice = hasil
-    move = movePlayer(parseInt(dice))
     printDadu(hasil);
+    // move = movePlayer(parseInt(dice))
+    playerPosition = movePlayer2G(dice)
+    await changePositionBar(playerPosition)
+    // changePositionBar(playerPosition)
+    // box_type = await checkBoxType()
+    // printDadu('0')
 }
 
 
