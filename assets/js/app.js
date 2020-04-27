@@ -14,9 +14,9 @@ let dice = 0
 
 
 const listMiniBox = []
-let numberBox = 1
 
 let generateMiniBox = () => {
+    let numberBox = 1
     for(i=0; i<10; i++) {
         let tempList = []
         for(j=0; j<10; j++) {
@@ -27,6 +27,7 @@ let generateMiniBox = () => {
             // divBox.setAttribute("id", `col${i}row${j}`);
             divBox.setAttribute("id", `${numberBox}`);
             if (numberBox == 1) {
+                typeBox = 'start'
                 divBox.setAttribute("data-type_box", "start");
                 divBox.setAttribute("data-bonus_box", "start");
             } else {
@@ -35,16 +36,21 @@ let generateMiniBox = () => {
             }
             divBox.style.backgroundColor = listColor.random()
             boxContent = document.createElement("div")
+            boxContent.setAttribute('class', 'boxContent')
             boxType = document.createElement("div")
+            boxType.setAttribute('class', 'boxType')
             boxLucky = document.createElement("div")
+            boxLucky.setAttribute('class', 'boxLucky')
             if (typeBox == 'bomb') {
                 boxTextType = document.createTextNode("😈")
             }
             else if (typeBox == 'bonus') {
                 boxTextType = document.createTextNode("😎")
+            } else if (typeBox == 'start') {
+                boxTextType = document.createTextNode("Start")
             } else {
                 boxTextType = document.createTextNode("😣")
-            }
+            } 
             boxTextContent = document.createTextNode(`${numberBox}`)
             boxTextLucky = document.createTextNode(`${bonusBox}`)
             // boxContent = document.createTextNode('')
