@@ -146,14 +146,10 @@ const movePlayer = async (distance=0) => {
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
             startPoint ++
-<<<<<<< Updated upstream
-            jumpMarker.play();
-=======
             jumpMarkerForward.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
 
->>>>>>> Stashed changes
             // sleep(800)
         // }, i*800)
     }
@@ -176,12 +172,6 @@ const movePlayerBack = async (distance=0) => {
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-<<<<<<< Updated upstream
-            let destinationId = parseInt(parentId) - 1
-            newparentId = destinationId
-            let playerDestination = document.getElementById(`${destinationId}`)
-            playerDestination.appendChild(playerObj)
-=======
             // console.log(parentId)
             let destinationId = parseInt(parentId)
             if(startPoint < 2) {
@@ -199,7 +189,6 @@ const movePlayerBack = async (distance=0) => {
             jumpMarkerBack.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
->>>>>>> Stashed changes
             // sleep(800)
         // }, i*800)
     }
