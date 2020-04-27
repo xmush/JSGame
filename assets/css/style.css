@@ -78,25 +78,28 @@ body {
     background-color: #fff;
     position: absolute;
     top: 20%;
-    left: 30%;
+    left: 20%;
     border-radius: 50% 50% 50% 0;
     border: 3px solid rgb(255, 132, 18);
     width: 20px;
     height: 20px;
     transform: rotate(-45deg);
+    animation-name: markerAnimation;
+    animation-duration: 1s;
 }
 
 .marker2::after{
     position: absolute;
-    content: '';
-    width: 20px;
-    height: 20px;
+    content: '👧';
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     top: 50%;
     left: 50%;
     margin-left: -7px;
     margin-top: -11px;
-    background-color: rgb(255, 132, 18);
+    /* background-color: #ffffff; */
+    transform: rotate(+45deg);
 }
 
 @keyframes markerAnimation {
