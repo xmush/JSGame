@@ -32,10 +32,10 @@ let generateMiniBox = () => {
                 divBox.setAttribute("data-type_box", "start");
                 divBox.setAttribute("data-bonus_box", "start");
             } 
-            // else if (numberBox == 100) {
-            //     divBox.setAttribute("data-type_box", 'win');
-            //     divBox.setAttribute("data-bonus_box", 'win');
-            // }
+            else if (numberBox == 100) {
+                divBox.setAttribute("data-type_box", '0');
+                divBox.setAttribute("data-bonus_box", '0');
+            }
             else {
                 divBox.setAttribute("data-type_box", `${typeBox}`);
                 divBox.setAttribute("data-bonus_box", `${bonusBox}`);
@@ -101,7 +101,7 @@ let printMiniBoxToBoard = () => {
 
 // return location
 function addPlayer() {
-    playerLocation = document.getElementById('70')
+    playerLocation = document.getElementById('89')
     playerMarker = document.createElement("div")
     playerMarker.setAttribute("class", "marker")
     playerMarker.setAttribute("id", "marker")
@@ -385,6 +385,7 @@ backStart.onclick = function(event) {
 
 window.onload = function(event) {
     modal.style.display = "block";
+    modalWinner.style.display = "none";
 
     generateMiniBox()
     printMiniBoxToBoard()
@@ -403,8 +404,10 @@ window.onload = function(event) {
         checkBoxType()
         console.log('Player position ', playerPosition)
         newPlayerLocation = await checkLuckyBox(''+playerPosition)
-        if(parseInt(newPlayerLocation) == 100) {
-            alert("Win!!")
+        if(parseInt(newPlayerLocation) == 100 || parseInt(playerPosition)== 100) {
+            modal.style.display = "none";
+            console.log('lllokasi ', parseInt(newPlayerLocation))
+            modalWinner.style.display = "block";
         }
         console.log('ini hasilnya ', newPlayerLocation)
         resetDice()
