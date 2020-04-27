@@ -6,7 +6,7 @@ Array.prototype.random = function () {
 const mainDiv = document.getElementById("main")
 const listColor = ['#ff0000', '#0000ff', '#008000', '#ffa500', '#808080', '#ffff00', '#800080']
 const listTypeBox = ['bomb', 'save', 'bonus', 'bomb'];
-const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5']
+const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '-1', '-2', '-3', '-4', '-5']
 let playerHealth = 200
 let playerPosition = 0
 const body = document.body
@@ -52,14 +52,14 @@ let generateMiniBox = () => {
             boxLucky.setAttribute('class', 'boxLucky')
             if (numberBox == 100) {
                 boxTextType = document.createTextNode("🚀")
-                boxTextLucky = document.createTextNode(`${bonusBox}`)
+                boxTextLucky = document.createTextNode(`***`)
             }
             else if (typeBox == 'bonus') {
                 boxTextType = document.createTextNode("😎")
                 boxTextLucky = document.createTextNode(`${bonusBox}`)
             } else if (typeBox == 'start') {
                 boxTextType = document.createTextNode("Start")
-                boxTextLucky = document.createTextNode(`${bonusBox}`)
+                boxTextLucky = document.createTextNode(`*`)
             } else if(typeBox == 'bomb') {
                 boxTextType = document.createTextNode("😈")
                 boxTextLucky = document.createTextNode(`${bonusBox}`)
@@ -104,7 +104,7 @@ let printMiniBoxToBoard = () => {
 
 // return location
 function addPlayer() {
-    playerLocation = document.getElementById('89')
+    playerLocation = document.getElementById('1')
     playerMarker = document.createElement("div")
     playerMarker.setAttribute("class", "marker")
     playerMarker.setAttribute("id", "marker")
@@ -150,10 +150,19 @@ const movePlayer = async (distance=0) => {
             playerDestination.appendChild(playerObj)
             startPoint ++
             jumpMarkerForward.play();
+            newPositionBar = document.getElementById('playerPosition1')
+            newPositionBar.innerHTML = `Position : ${newparentId}`
+
             // sleep(800)
         // }, i*800)
     }
-    return newparentId
+    if (newparentId == 0) {
+        console.log('the new ..', newparentId)
+        return newparentId+1
+    } else {
+        return newparentId
+
+    }
 }
 
 const movePlayerBack = async (distance=0) => {    
@@ -170,34 +179,57 @@ const movePlayerBack = async (distance=0) => {
             let parentId = playerLocationParent.getAttribute("id")
             // console.log(parentId)
             let destinationId = parseInt(parentId)
-            if(startPoint < 100) {
-                destinationId = parseInt(parentId) - 1
+            if(startPoint < 2) {
+                destinationId = parseInt(parentId) + 1
             }
             else {
-                destinationId = parseInt(parentId) + 1
+                destinationId = parseInt(parentId) - 1
             } 
-            console.log(destinationId)
+            console.log('back ..', destinationId)
+            console.log('startPoint', startPoint)
             newparentId = destinationId
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
-            startPoint ++
+            startPoint --
             jumpMarkerBack.play();
+            newPositionBar = document.getElementById('playerPosition1')
+            newPositionBar.innerHTML = `Position : ${newparentId}`
             // sleep(800)
         // }, i*800)
     }
-    return newparentId
+    if (newparentId == 0) {
+        console.log('the new ..', newparentId)
+        return newparentId+1
+    } else {
+        return newparentId
+
+    }
 }
 
+const checkHealtStatus = async (healthValue) => {
+    if (healthValue < 1 ){
+        return 0
+    }
+    else {
+        return 1
+    } 
+}
 
 const checkBoxType = async () => {
     let playerObj = document.getElementById("marker")
     let playerLocationParent = playerObj.parentNode;
     let parentType = playerLocationParent.getAttribute('data-type_box')
     if (parentType == 'bomb') {
-        playerHealth -= 50
-        newPlayerHealth = document.getElementById("playerHealth")
+        playerHealth -= 100
+        newPlayerHealth = document.getElementById("playerHealth1")
+        newPlayerHealth.innerHTML = `Health : ${playerHealth}`
+    } else if(parentType == 'bonus') {
+        playerHealth += 10
+        newPlayerHealth = document.getElementById("playerHealth1")
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
     }
+
+    return playerHealth
 }
 
 const checkLuckyBox = async (idParentMark) => {
@@ -257,7 +289,7 @@ let generatePlayerBar = () => {
     // Membuat Position Player 1
     let positionPlayer1 = document.createElement("p")
     positionPlayer1.setAttribute("id", "playerPosition1")
-    let positionPlayer1Text = document.createTextNode(`Position : ${playerPosition}`)
+    let positionPlayer1Text = document.createTextNode(`Position : 0`)
     positionPlayer1.appendChild(positionPlayer1Text)
     jenisPlayer1Div.appendChild(positionPlayer1)
     
@@ -441,7 +473,7 @@ window.onload = function(event) {
     generateMiniBox()
     printMiniBoxToBoard()
     addPlayer()
-    addPlayer2()
+    // addPlayer2()
     generatePlayerBar()
     printDadu()
     
@@ -452,7 +484,6 @@ window.onload = function(event) {
         jarak = hasil
         printDadu(hasil);
         playerPosition = await movePlayer(jarak)
-        checkBoxType()
         console.log('Player position ', playerPosition)
         newPlayerLocation = await checkLuckyBox(''+playerPosition)
         if(parseInt(newPlayerLocation) == 100 || parseInt(playerPosition)== 100) {
@@ -460,6 +491,15 @@ window.onload = function(event) {
             console.log('lllokasi ', parseInt(newPlayerLocation))
             modalWinner.style.display = "block";
             congratulation.play()
+        }
+        playerStatusHealth = await checkBoxType(newPlayerLocation)
+        gameStatus = await checkHealtStatus(playerStatusHealth)
+        console.log('game status', gameStatus)
+        if(gameStatus < 1) {
+            console.log('game status', gameStatus)
+            modal.style.display = "none";
+            modalGameOver.style.display = "block";
+            loser.play()
         }
         console.log('ini hasilnya ', newPlayerLocation)
         resetDice()
