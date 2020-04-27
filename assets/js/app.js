@@ -6,8 +6,8 @@ Array.prototype.random = function () {
 const mainDiv = document.getElementById("main")
 const listColor = ['#ff0000', '#0000ff', '#008000', '#ffa500', '#808080', '#ffff00', '#800080']
 const listTypeBox = ['bomb', 'save', 'bonus', 'bomb'];
-const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '-1', '-2', '-3', '-4', '-5']
-let playerHealth = 200
+const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5']
+let playerHealth = 100
 let playerPosition = 0
 const body = document.body
 let dice = 0
@@ -220,7 +220,7 @@ const checkBoxType = async () => {
     let playerLocationParent = playerObj.parentNode;
     let parentType = playerLocationParent.getAttribute('data-type_box')
     if (parentType == 'bomb') {
-        playerHealth -= 100
+        playerHealth -= 20
         newPlayerHealth = document.getElementById("playerHealth1")
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
     } else if(parentType == 'bonus') {
@@ -301,30 +301,30 @@ let generatePlayerBar = () => {
     jenisPlayer1Div.appendChild(healthPlayer1)
 
     //Membuat Div Wadah jenis Player 2
-    let jenisPlayer2Div = document.createElement("div")
-    jenisPlayer2Div.setAttribute("class", `player2`)
-    playerDiv.appendChild(jenisPlayer2Div)
+    // let jenisPlayer2Div = document.createElement("div")
+    // jenisPlayer2Div.setAttribute("class", `player2`)
+    // playerDiv.appendChild(jenisPlayer2Div)
     
-    //Membuat judul PLayer 2
-    let titlePlayer2 = document.createElement("h3")
-    titlePlayer2.setAttribute("id", "titlePlayer2")
-    let titlePlayer2Text = document.createTextNode("Player 2")
-    titlePlayer2.appendChild(titlePlayer2Text)
-    jenisPlayer2Div.appendChild(titlePlayer2)
+    // //Membuat judul PLayer 2
+    // let titlePlayer2 = document.createElement("h3")
+    // titlePlayer2.setAttribute("id", "titlePlayer2")
+    // let titlePlayer2Text = document.createTextNode("Player 2")
+    // titlePlayer2.appendChild(titlePlayer2Text)
+    // jenisPlayer2Div.appendChild(titlePlayer2)
     
-    //Membuat Position Player 2
-    let positionPlayer2 = document.createElement("p")
-    positionPlayer2.setAttribute("id", "playerPosition2")
-    let positionPlayer2Text = document.createTextNode(`Position : `)
-    positionPlayer2.appendChild(positionPlayer2Text)
-    jenisPlayer2Div.appendChild(positionPlayer2)
+    // //Membuat Position Player 2
+    // let positionPlayer2 = document.createElement("p")
+    // positionPlayer2.setAttribute("id", "playerPosition2")
+    // let positionPlayer2Text = document.createTextNode(`Position : `)
+    // positionPlayer2.appendChild(positionPlayer2Text)
+    // jenisPlayer2Div.appendChild(positionPlayer2)
     
-    //Membuat Health Player 2
-    let healthPlayer2 = document.createElement("p")
-    healthPlayer2.setAttribute("id", "playerHealth2")
-    let healthPlayer2Text = document.createTextNode(`Health : `)
-    healthPlayer2.appendChild(healthPlayer2Text)
-    jenisPlayer2Div.appendChild(healthPlayer2)
+    // //Membuat Health Player 2
+    // let healthPlayer2 = document.createElement("p")
+    // healthPlayer2.setAttribute("id", "playerHealth2")
+    // let healthPlayer2Text = document.createTextNode(`Health : `)
+    // healthPlayer2.appendChild(healthPlayer2Text)
+    // jenisPlayer2Div.appendChild(healthPlayer2)
 
     // Menambah div Dadu
     let daduDiv = document.createElement("div")
