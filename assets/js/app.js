@@ -31,7 +31,12 @@ let generateMiniBox = () => {
                 typeBox = 'start'
                 divBox.setAttribute("data-type_box", "start");
                 divBox.setAttribute("data-bonus_box", "start");
-            } else {
+            } 
+            // else if (numberBox == 100) {
+            //     divBox.setAttribute("data-type_box", 'win');
+            //     divBox.setAttribute("data-bonus_box", 'win');
+            // }
+            else {
                 divBox.setAttribute("data-type_box", `${typeBox}`);
                 divBox.setAttribute("data-bonus_box", `${bonusBox}`);
             }
@@ -42,18 +47,24 @@ let generateMiniBox = () => {
             boxType.setAttribute('class', 'boxType')
             boxLucky = document.createElement("div")
             boxLucky.setAttribute('class', 'boxLucky')
-            if (typeBox == 'bomb') {
-                boxTextType = document.createTextNode("😈")
+            if (numberBox == 100) {
+                boxTextType = document.createTextNode("🚀")
+                boxTextLucky = document.createTextNode(`${bonusBox}`)
             }
             else if (typeBox == 'bonus') {
                 boxTextType = document.createTextNode("😎")
+                boxTextLucky = document.createTextNode(`${bonusBox}`)
             } else if (typeBox == 'start') {
                 boxTextType = document.createTextNode("Start")
+                boxTextLucky = document.createTextNode(`${bonusBox}`)
+            } else if(typeBox == 'bomb') {
+                boxTextType = document.createTextNode("😈")
+                boxTextLucky = document.createTextNode(`${bonusBox}`)
             } else {
                 boxTextType = document.createTextNode("😣")
+                boxTextLucky = document.createTextNode(`${bonusBox}`)
             } 
             boxTextContent = document.createTextNode(`${numberBox}`)
-            boxTextLucky = document.createTextNode(`${bonusBox}`)
             // boxContent = document.createTextNode('')
 
             boxContent.appendChild(boxTextContent)
@@ -90,7 +101,7 @@ let printMiniBoxToBoard = () => {
 
 // return location
 function addPlayer() {
-    playerLocation = document.getElementById('1')
+    playerLocation = document.getElementById('70')
     playerMarker = document.createElement("div")
     playerMarker.setAttribute("class", "marker")
     playerMarker.setAttribute("id", "marker")
@@ -113,6 +124,8 @@ const resetDice = () => {
 
 const movePlayer = async (distance=0) => {
     let palyerMovement = distance
+    let startPoint = parseInt(document.getElementById("marker").parentNode.getAttribute("id"))
+    console.log('ini start point ', startPoint)
     let newparentId = ''
     for(i=1; i<= palyerMovement; i++) {
         // setTimeout(function(){ 
@@ -120,10 +133,19 @@ const movePlayer = async (distance=0) => {
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-            let destinationId = parseInt(parentId)+ 1
+            // console.log(parentId)
+            let destinationId = parseInt(parentId)
+            if(startPoint < 100) {
+                destinationId = parseInt(parentId) + 1
+            }
+            else {
+                destinationId = parseInt(parentId) - 1
+            } 
+            console.log(destinationId)
             newparentId = destinationId
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
+            startPoint ++
             jumpMarker.play();
             // sleep(800)
         // }, i*800)
@@ -164,17 +186,25 @@ const checkBoxType = async () => {
 }
 
 const checkLuckyBox = async (idParentMark) => {
+    console.log('ini di lucky ' ,idParentMark)
     parentId = document.getElementById(idParentMark)
     getLuckyMove = parentId.getAttribute('data-bonus_box')
     distance = parseInt(getLuckyMove)
+    console.log('ini distance ', distance)
+    let moveLocation = ''
     if (distance > 0) {
-        move = await movePlayer(distance)
+        moveLocation = await movePlayer(distance)
         console.log('ini maju', distance)
     } else if (distance < 0){
-        move = await movePlayerBack(distance)
-        console.log('ini mundur', distance)
+        moveLocation = await movePlayerBack(distance)
+        // console.log('ini mundur', distance)
     }
+    return moveLocation
 }
+
+// const checkMaxMinPosition = (startPoint,) => {
+//     if(startPoint == 95)
+// }
 
 let changePositionBar = (playerNewPosition) => {
     position = document.getElementById("playerPosition")
@@ -407,7 +437,12 @@ window.onload = function(event) {
         printDadu(hasil);
         playerPosition = await movePlayer(jarak)
         checkBoxType()
-        checkLuckyBox(playerPosition)
+        console.log('Player position ', playerPosition)
+        newPlayerLocation = await checkLuckyBox(''+playerPosition)
+        if(parseInt(newPlayerLocation) == 100) {
+            alert("Win!!")
+        }
+        console.log('ini hasilnya ', newPlayerLocation)
         resetDice()
         button.disabled = false;
         }
