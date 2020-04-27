@@ -12,7 +12,10 @@ let playerPosition = 0
 const body = document.body
 let dice = 0
 
-var jumpMarker = new Audio("assets/audio/soundMarker.ogg");
+var jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
+var jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
+var congratulation = new Audio("assets/audio/congratulation.mp3");
+var loser = new Audio("assets/audio/loser.mp3")
 
 const listMiniBox = []
 
@@ -146,14 +149,10 @@ const movePlayer = async (distance=0) => {
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
             startPoint ++
-<<<<<<< Updated upstream
-            jumpMarker.play();
-=======
             jumpMarkerForward.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
 
->>>>>>> Stashed changes
             // sleep(800)
         // }, i*800)
     }
@@ -166,22 +165,18 @@ const movePlayer = async (distance=0) => {
     }
 }
 
-const movePlayerBack = async (distance=0) => {
+const movePlayerBack = async (distance=0) => {    
+    // let palyerMovement = distance
     let palyerMovement = Math.abs(distance)
+    let startPoint = parseInt(document.getElementById("marker").parentNode.getAttribute("id"))
+    console.log('ini start point ', startPoint)
     let newparentId = ''
     for(i=1; i<= palyerMovement; i++) {
-        console.log(i)
         // setTimeout(function(){ 
             await new Promise(resolve => setTimeout(resolve, 400));
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-<<<<<<< Updated upstream
-            let destinationId = parseInt(parentId) - 1
-            newparentId = destinationId
-            let playerDestination = document.getElementById(`${destinationId}`)
-            playerDestination.appendChild(playerObj)
-=======
             // console.log(parentId)
             let destinationId = parseInt(parentId)
             if(startPoint < 2) {
@@ -199,7 +194,6 @@ const movePlayerBack = async (distance=0) => {
             jumpMarkerBack.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
->>>>>>> Stashed changes
             // sleep(800)
         // }, i*800)
     }
@@ -321,14 +315,14 @@ let generatePlayerBar = () => {
     //Membuat Position Player 2
     let positionPlayer2 = document.createElement("p")
     positionPlayer2.setAttribute("id", "playerPosition2")
-    let positionPlayer2Text = document.createTextNode(`Position : ${playerPosition}`)
+    let positionPlayer2Text = document.createTextNode(`Position : `)
     positionPlayer2.appendChild(positionPlayer2Text)
     jenisPlayer2Div.appendChild(positionPlayer2)
     
     //Membuat Health Player 2
     let healthPlayer2 = document.createElement("p")
     healthPlayer2.setAttribute("id", "playerHealth2")
-    let healthPlayer2Text = document.createTextNode(`Health : ${playerHealth}`)
+    let healthPlayer2Text = document.createTextNode(`Health : `)
     healthPlayer2.appendChild(healthPlayer2Text)
     jenisPlayer2Div.appendChild(healthPlayer2)
 
@@ -399,7 +393,7 @@ myModalRule.setAttribute("id", "myModalRule")
 myModalRule.setAttribute("class", "modalRule")
 body.appendChild(myModalRule)
 
-//Membuat isian di dalam Modal
+//Membuat isian di dalam Modal 
 let modalContentRule = document.createElement("div")
 modalContentRule.setAttribute("class", "modalContentRule")
 myModalRule.appendChild(modalContentRule)
@@ -407,7 +401,7 @@ myModalRule.appendChild(modalContentRule)
 //Membuat text di dalam Modal
 let isiModalRule = document.createElement("p")
 isiModalRule.setAttribute("id", "isiModalRule")
-isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2>"
+isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
 modalContentRule.appendChild(isiModalRule)
 
 //Tombol Back
@@ -416,8 +410,44 @@ backStart.setAttribute("id", "backStart")
 backStart.innerHTML = "back"
 modalContentRule.appendChild(backStart)
 
+// Membuat modal Winner
+let myModalWinner = document.createElement("div")
+myModalWinner.setAttribute("id", "myModalWinner")
+myModalWinner.setAttribute("class", "modalWinner")
+body.appendChild(myModalWinner)
+
+//Membuat isian di dalam Modal Winner
+let modalContentWinner = document.createElement("div")
+modalContentWinner.setAttribute("class", "modalContentWinner")
+myModalWinner.appendChild(modalContentWinner)
+
+//Membuat text di dalam Modal Winner
+let isiModalWinner = document.createElement("p")
+isiModalWinner.setAttribute("id", "isiModalWinner")
+isiModalWinner.innerHTML = "<h1>CONGRATULATIONS !</h1><h2>You're Lucky Boy</h2>"
+modalContentWinner.appendChild(isiModalWinner)
+
+// Membuat modal Winner
+let myModalGameOver = document.createElement("div")
+myModalGameOver.setAttribute("id", "myModalGameOver")
+myModalGameOver.setAttribute("class", "modalGameOver")
+body.appendChild(myModalGameOver)
+
+//Membuat isian di dalam Modal Winner
+let modalContentGameOver = document.createElement("div")
+modalContentGameOver.setAttribute("class", "modalContentGameOver")
+myModalGameOver.appendChild(modalContentGameOver)
+
+//Membuat text di dalam Modal Winner
+let isiModalGameOver = document.createElement("p")
+isiModalGameOver.setAttribute("id", "isiModalGameOver")
+isiModalGameOver.innerHTML = "<h1>!!! GAME OVER !!!</h1>"
+modalContentGameOver.appendChild(isiModalGameOver)
+
 let modal = document.getElementById("myModal");
-let modalRule = document.getElementById("myModalRule")
+let modalRule = document.getElementById("myModalRule");
+let modalWinner = document.getElementById("myModalWinner");
+let modalGameOver = document.getElementById("myModalGameOver");
 
 // Memulai game saat button start di klik
 buttonStart.onclick = function(event) {
@@ -460,6 +490,7 @@ window.onload = function(event) {
             modal.style.display = "none";
             console.log('lllokasi ', parseInt(newPlayerLocation))
             modalWinner.style.display = "block";
+            congratulation.play()
         }
         playerStatusHealth = await checkBoxType(newPlayerLocation)
         gameStatus = await checkHealtStatus(playerStatusHealth)
