@@ -96,6 +96,19 @@ function addPlayer() {
     playerLocation.appendChild(playerMarker)
 }
 
+function addPlayer2() {
+    playerLocation = document.getElementById('1')
+    playerMarker = document.createElement("div")
+    playerMarker.setAttribute("class", "marker2")
+    playerMarker.setAttribute("id", "marker2")
+    playerLocation.appendChild(playerMarker)
+}
+
+const resetDice = () => {
+    dadu = document.getElementById("placeholderDadu")
+    dadu.innerHTML = "0"
+}
+
 
 const movePlayer = async (distance=0) => {
     let palyerMovement = distance
@@ -116,38 +129,26 @@ const movePlayer = async (distance=0) => {
     return newparentId
 }
 
+const movePlayerBack = async (distance=0) => {
+    let palyerMovement = Math.abs(distance)
+    let newparentId = ''
+    for(i=1; i<= palyerMovement; i++) {
+        console.log(i)
+        // setTimeout(function(){ 
+            await new Promise(resolve => setTimeout(resolve, 400));
+            let playerObj = document.getElementById("marker")
+            let playerLocationParent = playerObj.parentNode;
+            let parentId = playerLocationParent.getAttribute("id")
+            let destinationId = parseInt(parentId) - 1
+            newparentId = destinationId
+            let playerDestination = document.getElementById(`${destinationId}`)
+            playerDestination.appendChild(playerObj)
+            // sleep(800)
+        // }, i*800)
+    }
+    return newparentId
+}
 
-// function movePlayer(distance=0) {
-//     let palyerMovement = distance
-//     for(i=1; i<= palyerMovement; i++) {
-//         setTimeout(function(){ 
-//             let playerObj = document.getElementById("marker")
-//             let playerLocationParent = playerObj.parentNode;
-//             let parentId = playerLocationParent.getAttribute("id")
-//             let destinationId = parseInt(parentId)+ 1
-//             let playerDestination = document.getElementById(`${destinationId}`)
-//             playerDestination.appendChild(playerObj)
-//          }, i*800);
-//     }
-
-    // checkBoxType()
-    
-    // console.log("clicked")
-// }
-
-// function movePlayerBack() {
-//     let palyerMovement = 1
-//     let playerObj = document.getElementById("marker")
-//     let playerLocationParent = playerObj.parentNode;
-//     let parentId = playerLocationParent.getAttribute("id")
-//     let destinationId = parseInt(parentId)- palyerMovement
-//     let playerDestination = document.getElementById(`${destinationId}`)
-//     console.log(parentId)
-//     console.log(destinationId)
-//     playerDestination.appendChild(playerObj)
-    
-//     // console.log("clicked")
-// }
 
 const checkBoxType = async () => {
     let playerObj = document.getElementById("marker")
@@ -159,6 +160,20 @@ const checkBoxType = async () => {
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
     }
 }
+
+const checkLuckyBox = async (idParentMark) => {
+    parentId = document.getElementById(idParentMark)
+    getLuckyMove = parentId.getAttribute('data-bonus_box')
+    distance = parseInt(getLuckyMove)
+    if (distance > 0) {
+        move = await movePlayer(distance)
+        console.log('ini maju', distance)
+    } else if (distance < 0){
+        move = await movePlayerBack(distance)
+        console.log('ini mundur', distance)
+    }
+}
+
 let changePositionBar = (playerNewPosition) => {
     position = document.getElementById("playerPosition")
     position.innerHTML = `Position : ${playerNewPosition}`
@@ -229,12 +244,10 @@ let generatePlayerBar = () => {
 }
 
 //Mengisi angka pada Roll Dice
-let dadu = {
-    acak: function(){
-        var resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
-        return resultRandom;
-        }
-    }
+const randomDoce = () => {
+    var resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
+    return resultRandom
+}
 
 //Print angka pada layout
 function printDadu(angka=0){
@@ -314,17 +327,20 @@ window.onload = function(event) {
     generateMiniBox()
     printMiniBoxToBoard()
     addPlayer()
+    addPlayer2()
     generatePlayerBar()
     printDadu()
     
     let button = document.getElementById("dadu")
         button.onclick = async () => {
         button.disabled = true;
-        var hasil = dadu.acak();
+        var hasil = randomDoce();
         jarak = hasil
         printDadu(hasil);
         playerPosition = await movePlayer(jarak)
         checkBoxType()
+        checkLuckyBox(playerPosition)
+        resetDice()
         button.disabled = false;
         }
 }
