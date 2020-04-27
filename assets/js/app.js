@@ -4,7 +4,7 @@ Array.prototype.random = function () {
 
 // let mainDiv = document.getElementById("main")
 const mainDiv = document.getElementById("main")
-const listColor = ['#c2b9dd', '#ccc7d4', '#faf6ff', '#c4dad7', '#f5d9d1', '#f3bced', '#a38da4', '#c6e1c1', '#ded8dd', '#b9b1a4', '#ad888c', '#ffd7c9', '#93c2d3', '#bef2f6', '#e0e3dd', '#a3c6ce', '#b4edf3', '#e4fec5', '#f9db7c', '#ecd7d9', '#cccccc', '#d1d8de', '#d7eef9', '#fae1cc', '#f6d7cb', '#b4a598']
+const listColor = ['#ff0000', '#0000ff', '#008000', '#ffa500', '#808080', '#ffff00', '#800080']
 const listTypeBox = ['bomb', 'save', 'bonus', 'bomb'];
 const listBonusBox = ['-5', '-4', '-3', '-2', '-1', '0', '1', '2', '3', '4', '5']
 let playerHealth = 200
@@ -156,7 +156,7 @@ body.appendChild(playerDiv)
 //Menambah tulisan Player
 let playerInPlayerBox = document.createElement("h2")
 playerInPlayerBox.setAttribute("id", "titlePlayer")
-let playerInPlayerBoxText = document.createTextNode("PLAYER")
+let playerInPlayerBoxText = document.createTextNode("LUCKY BOARD")
 playerInPlayerBox.appendChild(playerInPlayerBoxText)
 playerDiv.appendChild(playerInPlayerBox)
 
@@ -171,11 +171,11 @@ for(player=1; player<2; player++){
     // markerPlayer1.setAttribute("class", "marker")
     // jenisPlayerDiv.appendChild(markerPlayer1)
     //Membuat judul jenis Player
-    let jenisPlayerInPlayerBox = document.createElement("h3")
-    let jenisPlayerInPlayerBoxText = document.createTextNode(`Player ${player}`)
-    jenisPlayerInPlayerBox.appendChild(jenisPlayerInPlayerBoxText)
-    jenisPlayerInPlayerBox.setAttribute("id", "titlePlayer1")
-    jenisPlayerDiv.appendChild(jenisPlayerInPlayerBox)
+        // let jenisPlayerInPlayerBox = document.createElement("h3")
+        // let jenisPlayerInPlayerBoxText = document.createTextNode(`Player ${player}`)
+        // jenisPlayerInPlayerBox.appendChild(jenisPlayerInPlayerBoxText)
+        // jenisPlayerInPlayerBox.setAttribute("id", "titlePlayer1")
+        // jenisPlayerDiv.appendChild(jenisPlayerInPlayerBox)
     //Membuat Position
     let positionPlayer = document.createElement("p")
     positionPlayer.setAttribute("id", "playerPosition")
@@ -199,7 +199,7 @@ let changePositionBar = (playerNewPosition) => {
 let daduDiv = document.createElement("div")
 daduDiv.setAttribute("class", "dadu")
 playerInPlayerBox.setAttribute("id", "titlePlayer")
-daduDiv.innerHTML = "<h3 class='titleDadu'>Dadu</h3>"
+daduDiv.innerHTML = "<h3 class='titleDadu'>Dice</h3>"
 playerDiv.appendChild(daduDiv)
 
 //Membuat tempat dadu
@@ -239,4 +239,69 @@ button.onclick = async () => {
     // printDadu('0')
 }
 
+//Membuat Modal
+let myModal = document.createElement("div")
+myModal.setAttribute("id", "myModal")
+myModal.setAttribute("class", "modal")
+body.appendChild(myModal)
+//Membuat isian di dalam Modal
+let modalContent = document.createElement("div")
+modalContent.setAttribute("class", "modalContent")
+myModal.appendChild(modalContent)
+//Membuat text di dalam Modal
+let isiModal = document.createElement("p")
+isiModal.setAttribute("id", "isiModal")
+isiModal.innerHTML = "<h1>Lucky Board</h1><h3>Try your Lucky Now !</h3>"
+modalContent.appendChild(isiModal)
+//Membuat button Start
+let buttonStart = document.createElement("button")
+buttonStart.setAttribute("id", "buttonStart")
+buttonStart.innerHTML = "start"
+modalContent.appendChild(buttonStart)
+//Membuat button Rules
+let ruleStart = document.createElement("button")
+ruleStart.setAttribute("id", "ruleStart")
+ruleStart.innerHTML = "rules"
+modalContent.appendChild(ruleStart)
 
+/* */
+let myModalRule = document.createElement("div")
+myModalRule.setAttribute("id", "myModalRule")
+myModalRule.setAttribute("class", "modalRule")
+body.appendChild(myModalRule)
+//Membuat isian di dalam Modal
+let modalContentRule = document.createElement("div")
+modalContentRule.setAttribute("class", "modalContentRule")
+myModalRule.appendChild(modalContentRule)
+//Membuat text di dalam Modal
+let isiModalRule = document.createElement("p")
+isiModalRule.setAttribute("id", "isiModalRule")
+isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2>"
+modalContentRule.appendChild(isiModalRule)
+//Tombol Back
+let backStart = document.createElement("button")
+backStart.setAttribute("id", "backStart")
+backStart.innerHTML = "back"
+modalContentRule.appendChild(backStart)
+/* */
+
+let modal = document.getElementById("myModal");
+let modalRule = document.getElementById("myModalRule")
+
+window.onload = function(event) {
+    modal.style.display = "block";
+}
+
+buttonStart.onclick = function(event) {
+    modal.style.display = "none";
+}
+
+ruleStart.onclick = function(event) {
+    modal.style.display = "none";
+    modalRule.style.display = "block";
+}
+
+backStart.onclick = function(event) {
+    modalRule.style.display = "none";
+    modal.style.display = "block";
+}
