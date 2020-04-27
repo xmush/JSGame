@@ -12,6 +12,7 @@ let playerPosition = 0
 const body = document.body
 let dice = 0
 
+var jumpMarker = new Audio("assets/audio/soundMarker.ogg");
 
 const listMiniBox = []
 
@@ -123,6 +124,7 @@ const movePlayer = async (distance=0) => {
             newparentId = destinationId
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
+            jumpMarker.play();
             // sleep(800)
         // }, i*800)
     }
@@ -183,60 +185,84 @@ let changePositionBar = (playerNewPosition) => {
 // Aji
 //Menambah Children pada Main
 let generatePlayerBar = () => {
-    // const body = document.body
     let playerDiv = document.createElement("div")
     playerDiv.setAttribute("class", "player")
     body.appendChild(playerDiv)
-    // }
 
-    // //Menambah isi di kotak player
-    // let createPlayerBar = () => {
-    //Menambah tulisan Player
+    // Menambah isi di kotak Game
+    // Menambah tulisan judul Game
     let playerInPlayerBox = document.createElement("h2")
     playerInPlayerBox.setAttribute("id", "titlePlayer")
     let playerInPlayerBoxText = document.createTextNode("LUCKY BOARD")
     playerInPlayerBox.appendChild(playerInPlayerBoxText)
     playerDiv.appendChild(playerInPlayerBox)
-    // }
 
-    // //Menambah Jenis Player dan Keterangan (Health & Position)
-    // let createPlayerContent = () => {
-    //Membuat Div Wadah jenis Player
-    let jenisPlayerDiv = document.createElement("div")
-    jenisPlayerDiv.setAttribute("class", `player1`)
-    playerDiv.appendChild(jenisPlayerDiv)
-    let positionPlayer = document.createElement("p")
-    positionPlayer.setAttribute("id", "playerPosition")
-    let positionPlayerText = document.createTextNode(`Position : ${playerPosition}`)
-    positionPlayer.appendChild(positionPlayerText)
-    jenisPlayerDiv.appendChild(positionPlayer)
-    //Membuat Health
-    let healthPlayer = document.createElement("p")
-    healthPlayer.setAttribute("id", "playerHealth")
-    let healthPlayerText = document.createTextNode(`Health : ${playerHealth}`)
-    healthPlayer.appendChild(healthPlayerText)
-    jenisPlayerDiv.appendChild(healthPlayer)
-    // }
+    // Menambah DIV Wadah jenis Player 1
+    let jenisPlayer1Div = document.createElement("div")
+    jenisPlayer1Div.setAttribute("class", `player1`)
+    playerDiv.appendChild(jenisPlayer1Div)
+    
+    // Membuat judul Player 1
+    let titlePlayer1 = document.createElement("h3")
+    titlePlayer1.setAttribute("id", "titlePlayer1")
+    let titlePlayer1Text = document.createTextNode("Player 1")
+    titlePlayer1.appendChild(titlePlayer1Text)
+    jenisPlayer1Div.appendChild(titlePlayer1)
+    
+    // Membuat Position Player 1
+    let positionPlayer1 = document.createElement("p")
+    positionPlayer1.setAttribute("id", "playerPosition1")
+    let positionPlayer1Text = document.createTextNode(`Position : ${playerPosition}`)
+    positionPlayer1.appendChild(positionPlayer1Text)
+    jenisPlayer1Div.appendChild(positionPlayer1)
+    
+    // Membuat Health Player 1
+    let healthPlayer1 = document.createElement("p")
+    healthPlayer1.setAttribute("id", "playerHealth1")
+    let healthPlayer1Text = document.createTextNode(`Health : ${playerHealth}`)
+    healthPlayer1.appendChild(healthPlayer1Text)
+    jenisPlayer1Div.appendChild(healthPlayer1)
 
-    // //Menambah div Dadu
-    // let createBoxDadu = () => {
+    //Membuat Div Wadah jenis Player 2
+    let jenisPlayer2Div = document.createElement("div")
+    jenisPlayer2Div.setAttribute("class", `player2`)
+    playerDiv.appendChild(jenisPlayer2Div)
+    
+    //Membuat judul PLayer 2
+    let titlePlayer2 = document.createElement("h3")
+    titlePlayer2.setAttribute("id", "titlePlayer2")
+    let titlePlayer2Text = document.createTextNode("Player 2")
+    titlePlayer2.appendChild(titlePlayer2Text)
+    jenisPlayer2Div.appendChild(titlePlayer2)
+    
+    //Membuat Position Player 2
+    let positionPlayer2 = document.createElement("p")
+    positionPlayer2.setAttribute("id", "playerPosition2")
+    let positionPlayer2Text = document.createTextNode(`Position : ${playerPosition}`)
+    positionPlayer2.appendChild(positionPlayer2Text)
+    jenisPlayer2Div.appendChild(positionPlayer2)
+    
+    //Membuat Health Player 2
+    let healthPlayer2 = document.createElement("p")
+    healthPlayer2.setAttribute("id", "playerHealth2")
+    let healthPlayer2Text = document.createTextNode(`Health : ${playerHealth}`)
+    healthPlayer2.appendChild(healthPlayer2Text)
+    jenisPlayer2Div.appendChild(healthPlayer2)
+
+    // Menambah div Dadu
     let daduDiv = document.createElement("div")
     daduDiv.setAttribute("class", "dadu")
     playerInPlayerBox.setAttribute("id", "titlePlayer")
     daduDiv.innerHTML = "<h3 class='titleDadu'>Dice</h3>"
     playerDiv.appendChild(daduDiv)
-    // }
 
-    // //Membuat tempat dadu
-    // let createDadu = () => {
+    // Membuat tempat dadu
     let tempatDadu = document.createElement("p")
     tempatDadu.setAttribute("id", "placeholderDadu")
     tempatDadu.innerHTML = 0
     daduDiv.appendChild(tempatDadu)
-    // }
 
-    // //Membuat Roll Dadu
-    // let createButtonRollDadu = () => {
+    // Membuat Roll Dadu
     let buttonDadu = document.createElement("button")
     buttonDadu.setAttribute("id", "dadu")
     buttonDadu.innerHTML = "ROLL DICE"
@@ -255,67 +281,73 @@ function printDadu(angka=0){
     placeholderDadu.innerHTML = angka;
     }
 
-
-
 //Membuat Modal
 let myModal = document.createElement("div")
 myModal.setAttribute("id", "myModal")
 myModal.setAttribute("class", "modal")
 body.appendChild(myModal)
+
 //Membuat isian di dalam Modal
 let modalContent = document.createElement("div")
 modalContent.setAttribute("class", "modalContent")
 myModal.appendChild(modalContent)
+
 //Membuat text di dalam Modal
 let isiModal = document.createElement("p")
 isiModal.setAttribute("id", "isiModal")
 isiModal.innerHTML = "<h1>Lucky Board</h1><h3>Try your Lucky Now !</h3>"
 modalContent.appendChild(isiModal)
+
 //Membuat button Start
 let buttonStart = document.createElement("button")
 buttonStart.setAttribute("id", "buttonStart")
 buttonStart.innerHTML = "start"
 modalContent.appendChild(buttonStart)
+
 //Membuat button Rules
 let ruleStart = document.createElement("button")
 ruleStart.setAttribute("id", "ruleStart")
 ruleStart.innerHTML = "rules"
 modalContent.appendChild(ruleStart)
 
-/* */
+// Membuat modal Rule
 let myModalRule = document.createElement("div")
 myModalRule.setAttribute("id", "myModalRule")
 myModalRule.setAttribute("class", "modalRule")
 body.appendChild(myModalRule)
+
 //Membuat isian di dalam Modal
 let modalContentRule = document.createElement("div")
 modalContentRule.setAttribute("class", "modalContentRule")
 myModalRule.appendChild(modalContentRule)
+
 //Membuat text di dalam Modal
 let isiModalRule = document.createElement("p")
 isiModalRule.setAttribute("id", "isiModalRule")
 isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2>"
 modalContentRule.appendChild(isiModalRule)
+
 //Tombol Back
 let backStart = document.createElement("button")
 backStart.setAttribute("id", "backStart")
 backStart.innerHTML = "back"
 modalContentRule.appendChild(backStart)
-/* */
 
 let modal = document.getElementById("myModal");
 let modalRule = document.getElementById("myModalRule")
 
-
+// Memulai game saat button start di klik
 buttonStart.onclick = function(event) {
     modal.style.display = "none";
 }
 
+// Mengeluarkan modal rule saat button rule di klik
 ruleStart.onclick = function(event) {
     modal.style.display = "none";
     modalRule.style.display = "block";
 }
 
+// Mengeluarkan modal start saat button back di klik
 backStart.onclick = function(event) {
     modalRule.style.display = "none";
     modal.style.display = "block";
