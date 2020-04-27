@@ -12,7 +12,10 @@ let playerPosition = 0
 const body = document.body
 let dice = 0
 
-var jumpMarker = new Audio("assets/audio/soundMarker.ogg");
+var jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
+var jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
+var congratulation = new Audio("assets/audio/congratulation.mp3");
+var loser = new Audio("assets/audio/loser.mp3")
 
 const listMiniBox = []
 
@@ -146,27 +149,39 @@ const movePlayer = async (distance=0) => {
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
             startPoint ++
-            jumpMarker.play();
+            jumpMarkerForward.play();
             // sleep(800)
         // }, i*800)
     }
     return newparentId
 }
 
-const movePlayerBack = async (distance=0) => {
+const movePlayerBack = async (distance=0) => {    
+    // let palyerMovement = distance
     let palyerMovement = Math.abs(distance)
+    let startPoint = parseInt(document.getElementById("marker").parentNode.getAttribute("id"))
+    console.log('ini start point ', startPoint)
     let newparentId = ''
     for(i=1; i<= palyerMovement; i++) {
-        console.log(i)
         // setTimeout(function(){ 
             await new Promise(resolve => setTimeout(resolve, 400));
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-            let destinationId = parseInt(parentId) - 1
+            // console.log(parentId)
+            let destinationId = parseInt(parentId)
+            if(startPoint < 100) {
+                destinationId = parseInt(parentId) - 1
+            }
+            else {
+                destinationId = parseInt(parentId) + 1
+            } 
+            console.log(destinationId)
             newparentId = destinationId
             let playerDestination = document.getElementById(`${destinationId}`)
             playerDestination.appendChild(playerObj)
+            startPoint ++
+            jumpMarkerBack.play();
             // sleep(800)
         // }, i*800)
     }
@@ -444,6 +459,7 @@ window.onload = function(event) {
             modal.style.display = "none";
             console.log('lllokasi ', parseInt(newPlayerLocation))
             modalWinner.style.display = "block";
+            congratulation.play()
         }
         console.log('ini hasilnya ', newPlayerLocation)
         resetDice()
