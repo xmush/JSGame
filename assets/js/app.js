@@ -17,6 +17,8 @@ var jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
 var jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
 var congratulation = new Audio("assets/audio/congratulation.mp3");
 var loser = new Audio("assets/audio/loser.mp3")
+var bomb = new Audio("assets/audio/bomb.mp3")
+var bonus = new Audio("assets/audio/bonus.wav")
 
 const listMiniBox = []
 
@@ -204,10 +206,12 @@ const checkBoxType = async () => {
         playerHealth -= 20
         newPlayerHealth = document.getElementById("playerHealth1")
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
+        bomb.play()
     } else if(parentType == 'bonus') {
         playerHealth += 10
         newPlayerHealth = document.getElementById("playerHealth1")
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
+        bonus.play()
     }
     return playerHealth
 }
