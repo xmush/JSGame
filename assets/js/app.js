@@ -13,12 +13,12 @@ const body = document.body
 let dice = 0
 
 //deklarasi voice
-var jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
-var jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
-var congratulation = new Audio("assets/audio/congratulation.mp3");
-var loser = new Audio("assets/audio/loser.mp3")
-var bomb = new Audio("assets/audio/bomb.mp3")
-var bonus = new Audio("assets/audio/bonus.wav")
+const jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
+const jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
+const congratulation = new Audio("assets/audio/congratulation.mp3");
+const loser = new Audio("assets/audio/loser.mp3")
+const bomb = new Audio("assets/audio/bomb.mp3")
+const bonus = new Audio("assets/audio/bonus.wav")
 
 const listMiniBox = []
 
@@ -301,7 +301,7 @@ let generatePlayerBar = () => {
 
 //Mengisi angka pada Roll Dice
 const randomDoce = () => {
-    var resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
+    let resultRandom = Math.floor(Math.random() * (6) + 0) + 1;
     return resultRandom
 }
 
@@ -433,7 +433,7 @@ window.onload = function(event) {
     let button = document.getElementById("dadu")
         button.onclick = async () => {
         button.disabled = true;
-        var hasil = randomDoce();
+        let hasil = randomDoce();
         jarak = hasil
         printDadu(hasil);
         playerPosition = await movePlayer(jarak)
