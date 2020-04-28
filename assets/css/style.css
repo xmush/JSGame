@@ -21,7 +21,6 @@ body {
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto;
     opacity: 0.9;
 }
-
 .miniBox {
     width: 63px;
     height: 63px;
@@ -58,7 +57,6 @@ body {
     animation-name: markerAnimation;
     animation-duration: 1s;
 }
-
 .marker::after{
     position: absolute;
     content: '👦';
@@ -73,7 +71,6 @@ body {
     transform: rotate(+45deg);
 
 }
-
 .marker2 {
     background-color: #fff;
     position: absolute;
@@ -87,7 +84,6 @@ body {
     animation-name: markerAnimation;
     animation-duration: 1s;
 }
-
 .marker2::after{
     position: absolute;
     content: '👧';
@@ -101,28 +97,18 @@ body {
     /* background-color: #ffffff; */
     transform: rotate(+45deg);
 }
-
 @keyframes markerAnimation {
     from { top : 0%; left : 20% }
     to {top : 20%; left: 20%;}
 
 }
-
-
-/* AJI */
-/* body{
-    background-image: url(../img/704496.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
-
 .player {
     background-color: white;
     opacity: 0.85;
     border: 1px solid black;
-    margin-top: 60px;
+    margin-top: 100px;
     width: 300px;
-    height: 550px;
+    height: 450px;
     /* display: inline-grid; */
     top: 0;
     margin-left: 40px;
@@ -177,7 +163,7 @@ body {
     margin-left: 84px;
     margin-bottom: 10px;
 }
-/* The Modal (background) */
+/* Modal Windows */
 .modal {
     display: none;
     position: fixed;
@@ -191,7 +177,6 @@ body {
     margin-top: -30px;
     margin-left: -3px
   } 
-/* Modal Content */
 .modalContent {
     background-color: #fefefe;
     margin: auto;
@@ -226,7 +211,7 @@ body {
     font-size: 20px;
     margin-bottom: 10px;
 }
-
+/* Modal Rule */
 .modalRule {
     display: none;
     position: fixed;
@@ -240,7 +225,6 @@ body {
     margin-top: -30px;
     margin-left: -3px
   } 
-/* Modal Content */
 .modalContentRule {
     background-color: #fefefe;
     margin: auto;
@@ -261,7 +245,7 @@ body {
     font-size: 20px;
     margin-bottom: 10px;
 }
-
+/* Modal Winner */ 
 .modalWinner {
     display: none;
     position: fixed;
@@ -275,7 +259,6 @@ body {
     margin-top: -30px;
     margin-left: -3px
   } 
-/* Modal Content */
 .modalContentWinner {
     background-color: #fefefe;
     margin: auto;
@@ -286,7 +269,7 @@ body {
     text-align: center;
     opacity: 0.95;
 }
-
+/* Modal Game Over */
 .modalGameOver {
     display: none;
     position: fixed;
@@ -300,7 +283,6 @@ body {
     margin-top: -30px;
     margin-left: -3px
   } 
-/* Modal Content */
 .modalContentGameOver {
     background-color: #fefefe;
     margin: auto;
