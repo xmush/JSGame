@@ -2,7 +2,7 @@ Array.prototype.random = function () {
     return this[Math.floor((Math.random()*this.length))];
 }
 
-// let mainDiv = document.getElementById("main")
+// deklarasi semua variabel
 const mainDiv = document.getElementById("main")
 const listColor = ['#ff0000', '#0000ff', '#008000', '#ffa500', '#808080', '#ffff00', '#800080']
 const listTypeBox = ['bomb', 'save', 'bonus', 'bomb'];
@@ -12,6 +12,7 @@ let playerPosition = 0
 const body = document.body
 let dice = 0
 
+//deklarasi voice
 var jumpMarkerForward = new Audio("assets/audio/soundMarker.ogg");
 var jumpMarkerBack = new Audio("assets/audio/soundMarkerBack.wav");
 var congratulation = new Audio("assets/audio/congratulation.mp3");
@@ -19,6 +20,7 @@ var loser = new Audio("assets/audio/loser.mp3")
 
 const listMiniBox = []
 
+//Membuat grid kotak pada board
 let generateMiniBox = () => {
     let numberBox = 1
     for(i=0; i<10; i++) {
@@ -28,7 +30,6 @@ let generateMiniBox = () => {
             let bonusBox = listBonusBox.random()
             divBox = document.createElement("div");
             divBox.setAttribute("class", "miniBox");
-            // divBox.setAttribute("id", `col${i}row${j}`);
             divBox.setAttribute("id", `${numberBox}`);
             if (numberBox == 1) {
                 typeBox = 'start'
@@ -68,7 +69,6 @@ let generateMiniBox = () => {
                 boxTextLucky = document.createTextNode(`${bonusBox}`)
             } 
             boxTextContent = document.createTextNode(`${numberBox}`)
-            // boxContent = document.createTextNode('')
 
             boxContent.appendChild(boxTextContent)
             boxType.appendChild(boxTextType)
@@ -78,7 +78,6 @@ let generateMiniBox = () => {
             divBox.appendChild(boxType)
             divBox.appendChild(boxLucky)
     
-            // mainDiv.appendChild(divBox)
             tempList.push(divBox)
             numberBox++
         }
@@ -90,7 +89,6 @@ let printMiniBoxToBoard = () => {
     for(itemCol of listMiniBox.reverse()) {
         idxOfItem = listMiniBox.indexOf(itemCol) +1
         if(idxOfItem % 2 != 0) {
-            // console.log(idxOfItem)
             for(itemRow of itemCol.reverse()) {
                 mainDiv.appendChild(itemRow)
             }
@@ -102,7 +100,7 @@ let printMiniBoxToBoard = () => {
     }
 }
 
-// return location
+// Membuat simbol marker player
 function addPlayer() {
     playerLocation = document.getElementById('1')
     playerMarker = document.createElement("div")
@@ -111,32 +109,22 @@ function addPlayer() {
     playerLocation.appendChild(playerMarker)
 }
 
-function addPlayer2() {
-    playerLocation = document.getElementById('1')
-    playerMarker = document.createElement("div")
-    playerMarker.setAttribute("class", "marker2")
-    playerMarker.setAttribute("id", "marker2")
-    playerLocation.appendChild(playerMarker)
-}
-
 const resetDice = () => {
     dadu = document.getElementById("placeholderDadu")
     dadu.innerHTML = "0"
 }
 
-
+// Fungsi untuk maju kedepan
 const movePlayer = async (distance=0) => {
     let palyerMovement = distance
     let startPoint = parseInt(document.getElementById("marker").parentNode.getAttribute("id"))
     console.log('ini start point ', startPoint)
     let newparentId = ''
     for(i=1; i<= palyerMovement; i++) {
-        // setTimeout(function(){ 
             await new Promise(resolve => setTimeout(resolve, 400));
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-            // console.log(parentId)
             let destinationId = parseInt(parentId)
             if(startPoint < 100) {
                 destinationId = parseInt(parentId) + 1
@@ -152,32 +140,26 @@ const movePlayer = async (distance=0) => {
             jumpMarkerForward.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
-
-            // sleep(800)
-        // }, i*800)
     }
     if (newparentId == 0) {
         console.log('the new ..', newparentId)
         return newparentId+1
     } else {
         return newparentId
-
     }
 }
 
+// fungsi untuk mundur ke belakang
 const movePlayerBack = async (distance=0) => {    
-    // let palyerMovement = distance
     let palyerMovement = Math.abs(distance)
     let startPoint = parseInt(document.getElementById("marker").parentNode.getAttribute("id"))
     console.log('ini start point ', startPoint)
     let newparentId = ''
     for(i=1; i<= palyerMovement; i++) {
-        // setTimeout(function(){ 
             await new Promise(resolve => setTimeout(resolve, 400));
             let playerObj = document.getElementById("marker")
             let playerLocationParent = playerObj.parentNode;
             let parentId = playerLocationParent.getAttribute("id")
-            // console.log(parentId)
             let destinationId = parseInt(parentId)
             if(startPoint < 2) {
                 destinationId = parseInt(parentId) + 1
@@ -194,8 +176,6 @@ const movePlayerBack = async (distance=0) => {
             jumpMarkerBack.play();
             newPositionBar = document.getElementById('playerPosition1')
             newPositionBar.innerHTML = `Position : ${newparentId}`
-            // sleep(800)
-        // }, i*800)
     }
     if (newparentId == 0) {
         console.log('the new ..', newparentId)
@@ -215,6 +195,7 @@ const checkHealtStatus = async (healthValue) => {
     } 
 }
 
+// Fungsi untuk mengubah nilai health
 const checkBoxType = async () => {
     let playerObj = document.getElementById("marker")
     let playerLocationParent = playerObj.parentNode;
@@ -228,10 +209,10 @@ const checkBoxType = async () => {
         newPlayerHealth = document.getElementById("playerHealth1")
         newPlayerHealth.innerHTML = `Health : ${playerHealth}`
     }
-
     return playerHealth
 }
 
+//Bergerak ketika jatuh pada kotak pertama lucky board
 const checkLuckyBox = async (idParentMark) => {
     console.log('ini di lucky ' ,idParentMark)
     parentId = document.getElementById(idParentMark)
@@ -244,14 +225,9 @@ const checkLuckyBox = async (idParentMark) => {
         console.log('ini maju', distance)
     } else if (distance < 0){
         moveLocation = await movePlayerBack(distance)
-        // console.log('ini mundur', distance)
     }
     return moveLocation
 }
-
-// const checkMaxMinPosition = (startPoint,) => {
-//     if(startPoint == 95)
-// }
 
 let changePositionBar = (playerNewPosition) => {
     position = document.getElementById("playerPosition")
@@ -259,7 +235,6 @@ let changePositionBar = (playerNewPosition) => {
     console.log(playerNewPosition)
 }
 
-// Aji
 //Menambah Children pada Main
 let generatePlayerBar = () => {
     let playerDiv = document.createElement("div")
@@ -282,7 +257,7 @@ let generatePlayerBar = () => {
     // Membuat judul Player 1
     let titlePlayer1 = document.createElement("h3")
     titlePlayer1.setAttribute("id", "titlePlayer1")
-    let titlePlayer1Text = document.createTextNode("Player 1")
+    let titlePlayer1Text = document.createTextNode("Player")
     titlePlayer1.appendChild(titlePlayer1Text)
     jenisPlayer1Div.appendChild(titlePlayer1)
     
@@ -299,32 +274,6 @@ let generatePlayerBar = () => {
     let healthPlayer1Text = document.createTextNode(`Health : ${playerHealth}`)
     healthPlayer1.appendChild(healthPlayer1Text)
     jenisPlayer1Div.appendChild(healthPlayer1)
-
-    //Membuat Div Wadah jenis Player 2
-    // let jenisPlayer2Div = document.createElement("div")
-    // jenisPlayer2Div.setAttribute("class", `player2`)
-    // playerDiv.appendChild(jenisPlayer2Div)
-    
-    // //Membuat judul PLayer 2
-    // let titlePlayer2 = document.createElement("h3")
-    // titlePlayer2.setAttribute("id", "titlePlayer2")
-    // let titlePlayer2Text = document.createTextNode("Player 2")
-    // titlePlayer2.appendChild(titlePlayer2Text)
-    // jenisPlayer2Div.appendChild(titlePlayer2)
-    
-    // //Membuat Position Player 2
-    // let positionPlayer2 = document.createElement("p")
-    // positionPlayer2.setAttribute("id", "playerPosition2")
-    // let positionPlayer2Text = document.createTextNode(`Position : `)
-    // positionPlayer2.appendChild(positionPlayer2Text)
-    // jenisPlayer2Div.appendChild(positionPlayer2)
-    
-    // //Membuat Health Player 2
-    // let healthPlayer2 = document.createElement("p")
-    // healthPlayer2.setAttribute("id", "playerHealth2")
-    // let healthPlayer2Text = document.createTextNode(`Health : `)
-    // healthPlayer2.appendChild(healthPlayer2Text)
-    // jenisPlayer2Div.appendChild(healthPlayer2)
 
     // Menambah div Dadu
     let daduDiv = document.createElement("div")
@@ -401,7 +350,7 @@ myModalRule.appendChild(modalContentRule)
 //Membuat text di dalam Modal
 let isiModalRule = document.createElement("p")
 isiModalRule.setAttribute("id", "isiModalRule")
-isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. <br>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. <br>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>"
+isiModalRule.innerHTML = "<h2>Rules of Lucky Board :</h2><h4>Setiap player yang mencapai box ke '100' dan masih mempunyai 'Health' akan memenangkan 'GAME'</h4><p>keterangan : </p><p>1. 😎 = mendapat tambahan nilai health +10<br>2. 😣 = tidak mendapat penambahan dan pengurangan nilai<br>3. 😈 = mendapat pengurangan nilai health -20</p>"
 modalContentRule.appendChild(isiModalRule)
 
 //Tombol Back
@@ -444,6 +393,7 @@ isiModalGameOver.setAttribute("id", "isiModalGameOver")
 isiModalGameOver.innerHTML = "<h1>!!! GAME OVER !!!</h1>"
 modalContentGameOver.appendChild(isiModalGameOver)
 
+// deklarasi variabel dan modal
 let modal = document.getElementById("myModal");
 let modalRule = document.getElementById("myModalRule");
 let modalWinner = document.getElementById("myModalWinner");
@@ -473,7 +423,6 @@ window.onload = function(event) {
     generateMiniBox()
     printMiniBoxToBoard()
     addPlayer()
-    // addPlayer2()
     generatePlayerBar()
     printDadu()
     
