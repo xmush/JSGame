@@ -5,7 +5,7 @@ This game build using pure JS, DOM manipulation, HTML, and CSS that deploy with 
 #
 #
 ##### Contributed by :
-[Muhammad Sholeh](https://github.com/xmush/)
+[Muhammad Sholeh](https://github.com/xmush/) </br>
 [Ahmad Aji Pangestu](https://github.com/ahmadajip55)
 #
 #
